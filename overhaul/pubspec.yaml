@@ -13,7 +13,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6  # Iconos estilo iOS
+  cupertino_icons: ^1.0.6  
+  url_launcher: ^6.3.0
+  # Iconos estilo iOS
   # Añadir otras dependencias necesarias
 
 dev_dependencies:

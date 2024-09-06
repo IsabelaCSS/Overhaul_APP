@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:overhaul/DetalhesCarro.dart';
+import 'package:overhaul/Vertudo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,14 +60,26 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Pesquisar',
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 20),
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Pesquisar',
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.search),
+                          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                        ),
+                      ),
+                    ),
+                
+                    IconButton(
+                      icon: Icon(Icons.filter_list),
+                      onPressed: () {
+                        // Ação do botão de filtro
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -118,7 +132,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const Vertudo()),
+                              MaterialPageRoute(builder: (context) => Vertudo()),
                             );
                           },
                         child: const Padding(
@@ -148,7 +162,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const ProductPage1()),
+                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -162,7 +176,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const ProductPage2()),
+                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -176,7 +190,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const ProductPage3()),
+                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -190,7 +204,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const ProductPage4()),
+                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -211,7 +225,7 @@ class HomePage extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'OVERHAUL',
+                            'O V E R H A U L',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -335,87 +349,6 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Exemplo de tela de produto específica
-class ProductPage1 extends StatelessWidget {
-  const ProductPage1({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Renault Kwid'),
-      ),
-      body: const Center(
-        child: Text('Detalhes do Renault Kwid'),
-      ),
-    );
-  }
-}
-
-class ProductPage2 extends StatelessWidget {
-  const ProductPage2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Volkswagen Polo'),
-      ),
-      body: const Center(
-        child: Text('Detalhes do Volkswagen Polo'),
-      ),
-    );
-  }
-}
-
-class ProductPage3 extends StatelessWidget {
-  const ProductPage3({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fiat Argo'),
-      ),
-      body: const Center(
-        child: Text('Detalhes do Fiat Argo'),
-      ),
-    );
-  }
-}
-
-class ProductPage4 extends StatelessWidget {
-  const ProductPage4({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ford Ka'),
-      ),
-      body: const Center(
-        child: Text('Detalhes do Ford Ka'),
-      ),
-    );
-  }
-}
-
-class Vertudo extends StatelessWidget {
-  const Vertudo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Carros'),
-      ),
-      body: const Center(
-        child: Text('Todos os carros disponiveis'),
       ),
     );
   }
