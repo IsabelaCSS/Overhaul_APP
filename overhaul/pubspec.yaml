@@ -1,0 +1,37 @@
+name: overhaul
+description: A new Flutter project.
+
+# Evita que el paquete se publique accidentalmente en pub.dev
+publish_to: 'none'
+
+# Versión del proyecto
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6  # Iconos estilo iOS
+  # Añadir otras dependencias necesarias
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0  # Buenas prácticas y linting
+
+flutter:
+  uses-material-design: true
+
+  # Activos (imagenes, fuentes, etc.)
+  assets:
+    - assets/logo.png
+    # Puedes añadir más activos aquí:
+    # - assets/images/otra_imagen.png
+
+  # Para fuentes personalizadas, puedes descomentar y añadirlas aquí
+  # fonts:
+  #   - family: CustomFont
+  #     fonts:
+  #       - asset: fonts/CustomFont-Regular.ttf
