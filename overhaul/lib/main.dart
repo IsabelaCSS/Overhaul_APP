@@ -94,15 +94,15 @@ class HomePage extends StatelessWidget {
                 color: Color.fromARGB(255, 69, 69, 69),
               ),
             ),
-            const SizedBox(height: 20), // Espaçamento adequado
+            const SizedBox(height: 10), // Espaçamento adequado
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BrandIcon('assets/logo.png'),
-                  BrandIcon('assets/logo.png'),
-                  BrandIcon('assets/logo.png'),
+                  BrandIcon('assets/bmw.png'),
+                  BrandIcon('assets/mercedes.png'),
+                  BrandIcon('assets/nissan.png'),
                 ],
               ),
             ),
@@ -169,7 +169,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: const ProductCard(
-                            imagePath: 'assets/logo.png',
+                            imagePath: 'assets/renautkwid.png',
                             productName: 'Renault Kwid',
                             price: 'R\$45.000',
                             rating: 4.5,
@@ -183,7 +183,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: const ProductCard(
-                            imagePath: 'assets/logo.png',
+                            imagePath: 'assets/renautkwid.png',
                             productName: 'Volkswagen Polo',
                             price: 'R\$55.000',
                             rating: 4.7,
@@ -197,7 +197,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: const ProductCard(
-                            imagePath: 'assets/logo.png',
+                            imagePath: 'assets/renautkwid.png',
                             productName: 'Fiat Argo',
                             price: 'R\$50.000',
                             rating: 4.6,
@@ -211,7 +211,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: const ProductCard(
-                            imagePath: 'assets/logo.png',
+                            imagePath: 'assets/renautkwid.png',
                             productName: 'Ford Ka',
                             price: 'R\$48.000',
                             rating: 4.4,
@@ -237,7 +237,7 @@ class HomePage extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                            'Transforme seu caminho com inovação e sustentabilidade!',
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -297,12 +297,20 @@ class BrandIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 60,
+      radius: 60, // Define o tamanho do círculo
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      backgroundImage: AssetImage(imagePath),
+      child: ClipOval(
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.contain, // Mantém a proporção da imagem
+          width: 150, // Define a largura da imagem dentro do círculo
+          height: 150, // Define a altura da imagem dentro do círculo
+        ),
+      ),
     );
   }
 }
+
 
 class ProductCard extends StatelessWidget {
   final String imagePath;
@@ -325,12 +333,12 @@ class ProductCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(top: 10, left: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(imagePath, fit: BoxFit.contain, height: 125, width: double.infinity),
-            const SizedBox(height: 10),
+            const SizedBox(height: 1),
             Text(
               productName,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

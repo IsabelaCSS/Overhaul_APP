@@ -26,16 +26,13 @@ class RenaultKwidPage extends StatelessWidget {
 
   // Função para abrir o link
   void _launchURL() async {
-    const url = 'https://github.com/giovanavbs/rascunho_tcc';
-    // ignore: deprecated_member_use
-    if (await canLaunch(url)) {
-      // ignore: deprecated_member_use
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+    final Uri url = Uri.parse(
+        'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=drive_link');
 
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+      }
+        }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

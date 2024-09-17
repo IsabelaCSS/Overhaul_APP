@@ -22,7 +22,7 @@ class ItensAdicionais extends StatelessWidget {
 }
 
 class CarDetailsPage extends StatelessWidget {
-  final String url = 'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=sharing';
+  final String url = 'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=drive_link';
 
   const CarDetailsPage({super.key});
 
@@ -31,9 +31,7 @@ class CarDetailsPage extends StatelessWidget {
     if (await canLaunch(url)) {
       // ignore: deprecated_member_use
       await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    } 
   }
 
   @override

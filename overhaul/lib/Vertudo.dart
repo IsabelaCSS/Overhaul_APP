@@ -94,93 +94,107 @@ class CarListPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: cars.length,
               itemBuilder: (context, index) {
-                final car = cars[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    elevation: 8,
-                    child: Container(
-                      padding: EdgeInsets.all(0),
-                      height: 240, // Ajusta a altura do card para acomodar a imagem maior
-                      color: Colors.white,
-                      child: Column(
+  final car = cars[index];
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      elevation: 8,
+      child: Container(
+        padding: EdgeInsets.only(top: 20, left: 0),
+        height: 265,
+        color: Colors.white,
+        child: Column( // Alterei de Row para Column
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Coloca a imagem ao lado esquerdo
+                ClipRRect(
+                  child: Image.asset(
+                    car.imageUrl,
+                    width: 210,  // Ajusta a largura da imagem
+                    height: 180, // Ajusta a altura da imagem
+                    fit: BoxFit.cover, // Para preencher o espaço sem distorção
+                  ),
+                ),
+                SizedBox(width: 20), // Espaçamento entre a imagem e o texto
+                // Detalhes do carro (nome, ano, preço e classificação)
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 15),
+                      Text(
+                        car.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        'Modelo: ${car.year}\nPreço: \$${car.price}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(height: 5),
+                      Row(
                         children: [
-                          ListTile(
-                            contentPadding: EdgeInsets.only(top: 10, left: 0, right: 10),
-                            leading: ClipRRect(
-  borderRadius: BorderRadius.circular(10),
-  child: Image.asset(
-    car.imageUrl,
-    width: 220,  // Adjust width as per your requirement
-    height: 200, // Adjust height as per your requirement
-    fit: BoxFit.contain, // Use BoxFit.contain to prevent cropping
-  ),
-),
-
-
-                            title: Text(
-                              car.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 23),
-                            ),
-                            subtitle: Text(
-                              'Modelo: ${car.year}\nPreço: \$${car.price}',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                Text('${car.rating}'),
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      if (car.name == 'Renault Kwid') {
-                                        return DetalhesCarro();
-                                      } else if (car.name == 'Fiat Argo') {
-                                        return DetalhesCarro();
-                                      } else if (car.name == 'Chevrolet Onix') {
-                                        return DetalhesCarro();
-                                      }
-                                      return Container();
-                                    },
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
+                          Icon(Icons.star, color: Colors.yellow, size: 20),
+                          SizedBox(width: 5),
+                          Text('${car.rating}', style: TextStyle(fontSize: 16)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        if (car.name == 'Renault Kwid') {
+                          return DetalhesCarro();
+                        } else if (car.name == 'Fiat Argo') {
+                          return DetalhesCarro();
+                        } else if (car.name == 'Chevrolet Onix') {
+                          return DetalhesCarro();
+                        }
+                        return Container();
+                      },
+                    ),
+                  );
+                },
+                 style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130),
                                 backgroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                               ),
-                              child: Padding(
+                child: Padding(
                                 padding: EdgeInsets.only(top: 0, left: 5, right: 5),
                                 child: Text(
                                   'Ver detalhes',
                                   style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+                ),
+              ),
+            ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+},
+
+
             ),
           ),
         ],

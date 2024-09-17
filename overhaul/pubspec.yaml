@@ -31,6 +31,9 @@ flutter:
     - assets/logo.png
     - assets/renautkwid.png
     - assets/renautkwid2.png
+    - assets/nissan.png
+    - assets/mercedes.png
+    - assets/bmw.png
 
     # Puedes añadir más activos aquí:
     # - assets/images/otra_imagen.png
