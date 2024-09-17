@@ -29,6 +29,9 @@ flutter:
   # Activos (imagenes, fuentes, etc.)
   assets:
     - assets/logo.png
+    - assets/renautkwid.png
+    - assets/renautkwid2.png
+
     # Puedes añadir más activos aquí:
     # - assets/images/otra_imagen.png
 

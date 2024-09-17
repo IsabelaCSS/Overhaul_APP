@@ -1,16 +1,20 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:overhaul/ItensAdicionais.dart';
 import 'package:overhaul/Vertudo.dart';
 import 'package:url_launcher/url_launcher.dart'; // Importar o pacote url_launcher
 
 void main() {
-  runApp(DetalhesCarro());
+  runApp(const DetalhesCarro());
 }
 
 class DetalhesCarro extends StatelessWidget {
+  const DetalhesCarro({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: RenaultKwidPage(),
     );
@@ -18,10 +22,14 @@ class DetalhesCarro extends StatelessWidget {
 }
 
 class RenaultKwidPage extends StatelessWidget {
+  const RenaultKwidPage({super.key});
+
   // Função para abrir o link
   void _launchURL() async {
-    final url = 'https://github.com/giovanavbs/rascunho_tcc';
+    const url = 'https://github.com/giovanavbs/rascunho_tcc';
+    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
       await launch(url);
     } else {
       throw 'Could not launch $url';
@@ -36,7 +44,7 @@ class RenaultKwidPage extends StatelessWidget {
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
            onPressed: () {
                       Navigator.push(
                         context,
@@ -44,7 +52,7 @@ class RenaultKwidPage extends StatelessWidget {
                       );
                   },
         ),
-        title: Center(
+        title: const Center(
           child: Text(
             'Detalhes do Carro',
             style: TextStyle(color: Colors.white),
@@ -55,13 +63,13 @@ class RenaultKwidPage extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              'assets/logo.png', // Trocar pela imagem do carro
-              width: double.infinity,
-              height: 250,
+              'assets/renautkwid.png', // Trocar pela imagem do carro
+              width: 370,
+              height: 280,
               fit: BoxFit.cover,
             ),
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -72,7 +80,7 @@ class RenaultKwidPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListTile(
+                  const ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       '  Renault Kwid',
@@ -104,9 +112,9 @@ class RenaultKwidPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   // Alinhar "Cor" e as opções de cores à direita
-                  Row(
+                  const Row(
                     children: [
                       Spacer(),
                       Column(
@@ -128,15 +136,15 @@ class RenaultKwidPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Linha separadora entre as cores e a descrição
-                  Divider(
+                  const Divider(
                     color: Colors.grey,
                     thickness: 1,
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Centralizar o texto "Descrição"
-                  Center(
+                  const Center(
                     child: Text(
                       'Descrição',
                       style: TextStyle(
@@ -145,26 +153,26 @@ class RenaultKwidPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 8),
-                  Text(
+                  const SizedBox(height: 8),
+                  const Text(
                     'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                    style: TextStyle(color: const Color.fromARGB(255, 7, 7, 7)),
+                    style: TextStyle(color: Color.fromARGB(255, 7, 7, 7)),
                     textAlign: TextAlign.justify,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton(
                           onPressed: _launchURL, // Usar a função para abrir o link
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                             backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Comprar',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -172,17 +180,17 @@ class RenaultKwidPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Adicionar navegação para a tela "Itens Adicionais"
                   Row(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ItensAdicionais(),
+                              builder: (context) => const ItensAdicionais(),
                             ),
                           );
                         },
@@ -209,7 +217,7 @@ class RenaultKwidPage extends StatelessWidget {
 class ColorOption extends StatelessWidget {
   final Color color;
 
-  ColorOption(this.color);
+  const ColorOption(this.color, {super.key});
 
   @override
   Widget build(BuildContext context) {

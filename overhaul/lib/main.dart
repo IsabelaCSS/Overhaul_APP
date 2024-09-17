@@ -30,12 +30,14 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+                        const SizedBox(height: 20), // Espaçamento adequado
+
             // Logo
             Align(
               alignment: Alignment.center,
               child: Container(
                 width: 140,
-                height: 120, // Reduzi a altura da logo
+                height: 100, // Reduzi a altura da logo
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/logo.png'),
@@ -62,7 +64,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'Pesquisar',
@@ -74,7 +76,7 @@ class HomePage extends StatelessWidget {
                     ),
                 
                     IconButton(
-                      icon: Icon(Icons.filter_list),
+                      icon: const Icon(Icons.filter_list),
                       onPressed: () {
                         // Ação do botão de filtro
                       },
@@ -104,7 +106,7 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 30), // Espaçamento adequado entre os blocos
+            const SizedBox(height: 20), // Espaçamento adequado entre os blocos
             // Divisão para os produtos
             Container(
               decoration: const BoxDecoration(
@@ -118,7 +120,7 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.all(30.0),
+                      padding: EdgeInsets.only(left: 30.0, top: 30.0),
                         child: Text(
                           'Mais Vendidos',
                           style: TextStyle(
@@ -136,7 +138,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                         child: const Padding(
-                          padding: EdgeInsets.all(30.0),
+                      padding: EdgeInsets.only(right: 30.0, top: 25.0),
                           child: Text(
                             'Ver Tudo',
                             style: TextStyle(
@@ -157,12 +159,13 @@ class HomePage extends StatelessWidget {
                       mainAxisSpacing: 10, // Espaçamento vertical entre os itens
                       crossAxisSpacing: 10, // Espaçamento horizontal entre os itens
                       childAspectRatio: 0.75, // Proporção do card
+                      physics: const NeverScrollableScrollPhysics(), // Remove a rolagem
                       children: [
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
+                              MaterialPageRoute(builder: (context) => const DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -176,7 +179,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
+                              MaterialPageRoute(builder: (context) => const DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -190,7 +193,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
+                              MaterialPageRoute(builder: (context) => const DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -204,7 +207,7 @@ class HomePage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => DetalhesCarro()),
+                              MaterialPageRoute(builder: (context) => const DetalhesCarro()),
                             );
                           },
                           child: const ProductCard(
@@ -326,7 +329,7 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(imagePath, fit: BoxFit.contain, height: 180, width: double.infinity),
+            Image.asset(imagePath, fit: BoxFit.contain, height: 125, width: double.infinity),
             const SizedBox(height: 10),
             Text(
               productName,
