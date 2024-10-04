@@ -1,38 +1,13 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:overhaul/DetalhesCarro.dart';
+import 'package:overhaul/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
-void main() {
-  runApp(const ItensAdicionais());
-}
-
 class ItensAdicionais extends StatelessWidget {
-  const ItensAdicionais({super.key});
+  final Carros carro;
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CarDetailsPage(),
-    );
-  }
-}
-
-class CarDetailsPage extends StatelessWidget {
-  final String url = 'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=drive_link';
-
-  const CarDetailsPage({super.key});
-
-  void _launchURL() async {
-    // ignore: deprecated_member_use
-    if (await canLaunch(url)) {
-      // ignore: deprecated_member_use
-      await launch(url);
-    } 
-  }
+  const ItensAdicionais({Key? key, required this.carro}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +19,7 @@ class CarDetailsPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DetalhesCarro()),
-            );
+            Navigator.pop(context);
           },
         ),
         title: const Center(
@@ -60,9 +32,9 @@ class CarDetailsPage extends StatelessWidget {
       body: Column(
         children: [
           Image.asset(
-            'assets/renautkwid.png', // Trocar pela imagem do carro
-              width: 370,
-              height: 280,
+            'assets/renautkwid.png',
+            width: 370,
+            height: 280,
             fit: BoxFit.cover,
           ),
           Expanded(
@@ -79,19 +51,19 @@ class CarDetailsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         Text(
-                          '   Renault Kwid           ',
-                          style: TextStyle(
+                          '${carro.nome}',
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 28, // Ajustando o tamanho da fonte do título
+                            fontSize: 28,
                           ),
                         ),
-                        SizedBox(width: 10), // Espaço entre o nome e a estrela
-                        Icon(Icons.star, color: Colors.yellow),
-                        SizedBox(width: 5), // Pequeno espaço entre a estrela e a nota
-                        Text(
+                        const SizedBox(width: 10),
+                        const Icon(Icons.star, color: Colors.yellow),
+                        const SizedBox(width: 5),
+                        const Text(
                           '4.5',
                           style: TextStyle(
                             fontSize: 18,
@@ -105,11 +77,6 @@ class CarDetailsPage extends StatelessWidget {
                       '     • Sistema de freio motorizado inteligente\n'
                       '     • Monitoramento da fadiga do motorista (DFM)\n'
                       '     • Reconhecimento de sinais de trânsito (TSR)\n'
-                      '     • Trava manual de segurança para crianças\n'
-                      '     • Detecção de ponto cego (BSD)\n'
-                      '     • Sistema de freio motorizado inteligente\n'
-                      '     • Monitoramento da fadiga do motorista (DFM)\n'
-                      '     • Reconhecimento de sinais de trânsito (TSR)\n'
                       '     • Trava manual de segurança para crianças',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -118,7 +85,7 @@ class CarDetailsPage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: _launchURL,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white, // Cor de fundo do botão
+                          backgroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -130,12 +97,12 @@ class CarDetailsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30), // Espaço entre o botão e a imagem
+                    const SizedBox(height: 30),
                     Center(
                       child: Image.asset(
-                        'assets/logo.png', // Imagem do carro agora abaixo do botão
-                        width: 100, // Ajuste a largura conforme necessário
-                        height: 30, // Ajuste a altura conforme necessário
+                        'assets/logo.png',
+                        width: 100,
+                        height: 30,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -147,5 +114,14 @@ class CarDetailsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _launchURL() async {
+    const String url = 'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=drive_link';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

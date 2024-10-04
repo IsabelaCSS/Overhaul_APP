@@ -2,37 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:overhaul/ItensAdicionais.dart';
-import 'package:overhaul/Vertudo.dart';
-import 'package:url_launcher/url_launcher.dart'; // Importar o pacote url_launcher
-
-void main() {
-  runApp(const DetalhesCarro());
-}
+import 'package:overhaul/globais.dart' as globals;
+import 'package:overhaul/main.dart';
 
 class DetalhesCarro extends StatelessWidget {
-  const DetalhesCarro({super.key});
+  final Carros carro;
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: RenaultKwidPage(),
-    );
-  }
-}
+  const DetalhesCarro({Key? key, required this.carro}) : super(key: key);
 
-class RenaultKwidPage extends StatelessWidget {
-  const RenaultKwidPage({super.key});
-
-  // Função para abrir o link
-  void _launchURL() async {
-    final Uri url = Uri.parse(
-        'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=drive_link');
-
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-      }
-        }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,12 +19,9 @@ class RenaultKwidPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-           onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Vertudo()),
-                      );
-                  },
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Center(
           child: Text(
@@ -60,7 +34,7 @@ class RenaultKwidPage extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              'assets/renautkwid.png', // Trocar pela imagem do carro
+              'assets/renautkwid.png',
               width: 370,
               height: 280,
               fit: BoxFit.cover,
@@ -83,7 +57,7 @@ class RenaultKwidPage extends StatelessWidget {
                       '  Renault Kwid',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 28, // Ajustando o tamanho da fonte do título
+                        fontSize: 28,
                       ),
                     ),
                     subtitle: Column(
@@ -92,11 +66,11 @@ class RenaultKwidPage extends StatelessWidget {
                         SizedBox(height: 0),
                         Text(
                           '     Modelo: 2019',
-                          style: TextStyle(fontSize: 17), // Tamanho da fonte do modelo
+                          style: TextStyle(fontSize: 17),
                         ),
                         Text(
                           '     Preço: \$45.000',
-                          style: TextStyle(fontSize: 17), // Tamanho da fonte do preço
+                          style: TextStyle(fontSize: 17),
                         ),
                       ],
                     ),
@@ -110,7 +84,6 @@ class RenaultKwidPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  // Alinhar "Cor" e as opções de cores à direita
                   const Row(
                     children: [
                       Spacer(),
@@ -134,13 +107,8 @@ class RenaultKwidPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  // Linha separadora entre as cores e a descrição
-                  const Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
+                  const Divider(color: Colors.grey, thickness: 1),
                   const SizedBox(height: 16),
-                  // Centralizar o texto "Descrição"
                   const Center(
                     child: Text(
                       'Descrição',
@@ -152,7 +120,7 @@ class RenaultKwidPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     style: TextStyle(color: Color.fromARGB(255, 7, 7, 7)),
                     textAlign: TextAlign.justify,
                   ),
@@ -161,7 +129,15 @@ class RenaultKwidPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: _launchURL, // Usar a função para abrir o link
+                          onPressed: () {
+                            globals.currentCarro = carro; // va global
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ItensAdicionais(carro: carro),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             backgroundColor: Colors.black,
@@ -178,16 +154,16 @@ class RenaultKwidPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  // Adicionar navegação para a tela "Itens Adicionais"
                   Row(
                     children: [
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
+                          globals.currentCarro = carro; // va global
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ItensAdicionais(),
+                              builder: (context) => ItensAdicionais(carro: carro),
                             ),
                           );
                         },
@@ -235,4 +211,3 @@ class ColorOption extends StatelessWidget {
     );
   }
 }
-

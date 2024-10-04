@@ -1,12 +1,6 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors, prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:overhaul/DetalhesCarro.dart';
+// import 'package:overhaul/DetalhesCarro.dart';
 import 'package:overhaul/main.dart';
-
-void main() {
-  runApp(Vertudo());
-}
 
 class Vertudo extends StatelessWidget {
   @override
@@ -18,15 +12,41 @@ class Vertudo extends StatelessWidget {
   }
 }
 
-class CarListPage extends StatelessWidget {
-  final List<Car> cars = [
-    Car(name: 'Renault Kwid', year: 2019, price: 45000, rating: 4.5, imageUrl: 'assets/renautkwid2.png'),
-    Car(name: 'Fiat Argo', year: 2020, price: 52000, rating: 4.2, imageUrl: 'assets/renautkwid2.png'),
-    Car(name: 'Chevrolet Onix', year: 2021, price: 60000, rating: 4.8, imageUrl: 'assets/renautkwid2.png'),
-    Car(name: 'Chevrolet Onix', year: 2021, price: 60000, rating: 4.8, imageUrl: 'assets/renautkwid2.png'),
-    Car(name: 'Chevrolet Onix', year: 2021, price: 60000, rating: 4.8, imageUrl: 'assets/renautkwid2.png'),
+class CarListPage extends StatefulWidget {
+  @override
+  _CarListPageState createState() => _CarListPageState();
+}
 
+class _CarListPageState extends State<CarListPage> {
+  final controller = TextEditingController();
+  List<Car> allCarros = [
+    Car(nome: 'Renault Kwid', ano: 2019, preco: 45000, classificacao: 4.5, imageUrl: 'assets/renautkwid2.png'),
+    Car(nome: 'Fiat Argo', ano: 2020, preco: 52000, classificacao: 4.2, imageUrl: 'assets/renautkwid2.png'),
+    Car(nome: 'Chevrolet Onix', ano: 2021, preco: 60000, classificacao: 4.8, imageUrl: 'assets/renautkwid2.png'),
   ];
+  List<Car> filteredCarros = []; // aqui decidi usar a propria lista ja criada pr filtar a pesquisa ficou ate bunitin
+  // enfim falando da logica é a mesma do outro kk so to usando a lista q ja tava aq, mudei umas coisa aq e ali nada muito ouhh! mas tem um problema na detalhes na parte de navegação mas sem saco pra ver isso hj
+  String query = ''; 
+
+  @override
+  void initState() {
+    super.initState();
+    filteredCarros = allCarros;
+  }
+
+  void pesquisaCar(String query) {
+    final suggestion = allCarros.where((carro) {
+      final carroNome = carro.nome.toLowerCase();
+      final input = query.toLowerCase();
+      return carroNome.contains(input);
+    }).toList();
+
+    setState(() {
+      this.query = query; 
+      filteredCarros = suggestion;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +67,7 @@ class CarListPage extends StatelessWidget {
                   },
                 ),
                 Spacer(),
-                Text(
+                const Text(
                   'Carros',
                   style: TextStyle(fontSize: 24),
                 ),
@@ -73,128 +93,113 @@ class CarListPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Pesquisar',
                         border: InputBorder.none,
                         prefixIcon: Icon(Icons.search),
                         contentPadding: EdgeInsets.symmetric(vertical: 15.0),
                       ),
+                      onChanged: pesquisaCar,
                     ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.filter_list),
-                    onPressed: () {},
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
-              itemCount: cars.length,
+              itemCount: filteredCarros.length,
               itemBuilder: (context, index) {
-  final car = cars[index];
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      elevation: 8,
-      child: Container(
-        padding: EdgeInsets.only(top: 20, left: 0),
-        height: 265,
-        color: Colors.white,
-        child: Column( // Alterei de Row para Column
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Coloca a imagem ao lado esquerdo
-                ClipRRect(
-                  child: Image.asset(
-                    car.imageUrl,
-                    width: 210,  // Ajusta a largura da imagem
-                    height: 180, // Ajusta a altura da imagem
-                    fit: BoxFit.cover, // Para preencher o espaço sem distorção
-                  ),
-                ),
-                SizedBox(width: 20), // Espaçamento entre a imagem e o texto
-                // Detalhes do carro (nome, ano, preço e classificação)
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 15),
-                      Text(
-                        car.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      Text(
-                        'Modelo: ${car.year}\nPreço: \$${car.price}',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.yellow, size: 20),
-                          SizedBox(width: 5),
-                          Text('${car.rating}', style: TextStyle(fontSize: 16)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        if (car.name == 'Renault Kwid') {
-                          return DetalhesCarro();
-                        } else if (car.name == 'Fiat Argo') {
-                          return DetalhesCarro();
-                        } else if (car.name == 'Chevrolet Onix') {
-                          return DetalhesCarro();
-                        }
-                        return Container();
-                      },
+                final carro = filteredCarros[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
-                  );
-                },
-                 style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130),
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
+                    elevation: 8,
+                    child: Container(
+                      padding: EdgeInsets.only(top: 20, left: 0),
+                      height: 265,
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                  carro.imageUrl,
+                                  width: 210,
+                                  height: 180,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                child: Padding(
-                                padding: EdgeInsets.only(top: 0, left: 5, right: 5),
-                                child: Text(
-                                  'Ver detalhes',
-                                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-},
-
-
+                              SizedBox(width: 20),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 15),
+                                    Text(
+                                      carro.nome,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Modelo: ${carro.ano}\nPreço: \$${carro.preco}',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.star, color: Colors.yellow, size: 20),
+                                        SizedBox(width: 5),
+                                        Text('${carro.classificacao}', style: TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          // aqui começa minha desgraça provavelmente algo besta q to deixando passar 
+                          // Center(
+                          //   child: ElevatedButton(
+                          //     onPressed: () {
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (context) => DetalhesCarro(carro: carro),
+                          //         ),
+                          //       );
+                          //     },
+                          //     style: ElevatedButton.styleFrom(
+                          //       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130),
+                          //       backgroundColor: Colors.black,
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(20.0),
+                          //       ),
+                          //     ),
+                          //     child: Padding(
+                          //       padding: EdgeInsets.only(top: 0, left: 5, right: 5),
+                          //       child: Text(
+                          //         'Ver detalhes',
+                          //         style: TextStyle(color: Colors.white),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -203,19 +208,18 @@ class CarListPage extends StatelessWidget {
   }
 }
 
-
 class Car {
-  final String name;
-  final int year;
-  final int price;
-  final double rating;
+  final String nome;
+  final int ano;
+  final int preco;
+  final double classificacao;
   final String imageUrl;
 
   Car({
-    required this.name,
-    required this.year,
-    required this.price,
-    required this.rating,
+    required this.nome,
+    required this.ano,
+    required this.preco,
+    required this.classificacao,
     required this.imageUrl,
   });
 }
