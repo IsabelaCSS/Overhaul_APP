@@ -8,7 +8,7 @@ import 'package:overhaul/main.dart';
 class DetalhesCarro extends StatelessWidget {
   final Carros carro;
 
-  const DetalhesCarro({Key? key, required this.carro}) : super(key: key);
+  const DetalhesCarro({super.key, required this.carro});
 
   @override
   Widget build(BuildContext context) {

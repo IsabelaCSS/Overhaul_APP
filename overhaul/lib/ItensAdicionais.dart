@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:overhaul/main.dart';
@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ItensAdicionais extends StatelessWidget {
   final Carros carro;
 
-  const ItensAdicionais({Key? key, required this.carro}) : super(key: key);
+  const ItensAdicionais({super.key, required this.carro});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class ItensAdicionais extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${carro.nome}',
+                          carro.nome,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 28,

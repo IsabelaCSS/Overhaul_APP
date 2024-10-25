@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, sized_box_for_whitespace, use_key_in_widget_constructors, use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:overhaul/DetalhesCarro.dart';
 import 'package:overhaul/Vertudo.dart';
@@ -272,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    width: MediaQuery.of(context).size.width, // add um mediaquery para o container oculpar toda a tela, "ficando" responsivokkk
+                    width: MediaQuery.of(context).size.width, // add um mediaquery para o container oculpar toda a tela, "ficando" responsivokkk (i love you, tava sofrendo com isso)
                     color: const Color.fromARGB(255, 11, 11, 11),
                     padding: const EdgeInsets.symmetric(vertical: 30.0),
                     child: const Column(
