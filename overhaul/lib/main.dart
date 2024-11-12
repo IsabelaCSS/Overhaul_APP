@@ -1,8 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api, sized_box_for_whitespace, use_key_in_widget_constructors, use_super_parameters
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:overhaul/DetalhesCarro.dart';
-import 'package:overhaul/Vertudo.dart';
+import 'DetalhesCarro.dart';
+import 'Vertudo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // debug retirado com sucesso
+      debugShowCheckedModeBanner: false,
       title: 'Overhaul',
       theme: ThemeData(
         scaffoldBackgroundColor: const Color.fromARGB(234, 234, 234, 234),
@@ -34,8 +34,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = TextEditingController();
   List<Carros> carros = allCarros;
-  String query =
-      ''; // Armazena a consulta de pesquisa e tbm permite que ele exiba apenas qnd tiver uma interação
+  String query = '';
+
+  // Cria uma sublista dos 4 principais carros para exibição principal
+  List<Carros> mainCarros = allCarros.take(4).toList();
 
   void pesquisaCar(String query) {
     final suggestion = allCarros.where((carro) {
@@ -45,8 +47,7 @@ class _HomePageState extends State<HomePage> {
     }).toList();
 
     setState(() {
-      this.query =
-          query; // Atualiza conforme a pesquisa e vai mostrando as sugtoes
+      this.query = query;
       carros = suggestion;
     });
   }
@@ -58,7 +59,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-
             // Logo
             Align(
               alignment: Alignment.center,
@@ -72,8 +72,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
-            // Barra de pesquisa yo
+            // Barra de pesquisa
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Container(
@@ -82,8 +81,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black
-                          .withOpacity(0.2), // so charme it's not real
+                      color: Colors.black.withOpacity(0.2),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -97,29 +95,38 @@ class _HomePageState extends State<HomePage> {
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(vertical: 15.0),
                   ),
-                  onChanged:
-                      pesquisaCar, // Atualiza a pesquisa, e madeira facil de explicar a cada letra digitada
+                  onChanged: pesquisaCar,
                 ),
               ),
             ),
-
             // Lista de carros pesquisados
-            if (query.isNotEmpty) // exibe a listinha apenas se tiver algo nela
-              Container(
+            if (query.isNotEmpty)
+              SizedBox(
                 height: 200,
                 child: ListView.builder(
                   itemCount: carros.length,
                   itemBuilder: (context, index) {
                     final carro = carros[index];
-
                     return ListTile(
-                      leading: Image.network(
+                      leading: Image.asset(
                         carro.image,
                         fit: BoxFit.cover,
                         height: 50,
                         width: 50,
                       ),
                       title: Text(carro.nome),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(carro.price, style: TextStyle(color: Colors.grey[600])),
+                          Row(
+                            children: [
+                              const Icon(Icons.star, color: Colors.yellow, size: 16),
+                              Text(carro.rating.toString(), style: TextStyle(color: Colors.grey[600])),
+                            ],
+                          ),
+                        ],
+                      ),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -130,7 +137,6 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-
             const SizedBox(height: 30),
             const Text(
               'Marcas parceiras',
@@ -140,12 +146,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 10),
-
-            // Scroll marcas parceiras
-            Marcas(), // add um scroll so pra ficar bunitin
-
+            // Scroll de marcas parceiras
+            Marcas(),
             const SizedBox(height: 20),
-
             // Divisão para os produtos
             Container(
               decoration: const BoxDecoration(
@@ -159,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(left: 30.0, top: 30.0),
+                        padding: EdgeInsets.only(left: 30.0, top: 20.0),
                         child: Text(
                           'Mais Vendidos',
                           style: TextStyle(
@@ -197,84 +200,29 @@ class _HomePageState extends State<HomePage> {
                     crossAxisSpacing: 10,
                     childAspectRatio: 0.75,
                     physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      GestureDetector(
+                    // Exibe apenas os 4 principais carros
+                    children: mainCarros.map((carro) {
+                      return GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetalhesCarro(
-                                  carro: allCarros[
-                                      0]), // passa o carro correspondente vou adicionar a listinha to com preguiça agr
+                              builder: (context) => DetalhesCarro(carro: carro),
                             ),
                           );
                         },
-                        child: const ProductCard(
-                          imagePath: 'assets/renautkwid.png',
-                          productName: 'Renault Kwid',
-                          price: 'R\$45.000',
-                          rating: 4.5,
+                        child: ProductCard(
+                          imagePath: carro.image,
+                          productName: carro.nome,
+                          price: carro.price,
+                          rating: carro.rating,
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetalhesCarro(
-                                  carro: allCarros[
-                                      0]), // passa o carro correspondente vou adicionar a listinha to com preguiça agr
-                            ),
-                          );
-                        },
-                        child: const ProductCard(
-                          imagePath: 'assets/renautkwid.png',
-                          productName: 'Renault Kwid',
-                          price: 'R\$45.000',
-                          rating: 4.5,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetalhesCarro(
-                                  carro: allCarros[
-                                      0]), // passa o carro correspondente vou adicionar a listinha to com preguiça agr
-                            ),
-                          );
-                        },
-                        child: const ProductCard(
-                          imagePath: 'assets/renautkwid.png',
-                          productName: 'Renault Kwid',
-                          price: 'R\$45.000',
-                          rating: 4.5,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetalhesCarro(
-                                  carro: allCarros[
-                                      0]), // passa o carro correspondente vou adicionar a listinha to com preguiça agr
-                            ),
-                          );
-                        },
-                        child: const ProductCard(
-                          imagePath: 'assets/renautkwid.png',
-                          productName: 'Renault Kwid',
-                          price: 'R\$45.000',
-                          rating: 4.5,
-                        ),
-                      ),
-                    ],
+                      );
+                    }).toList(),
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    width: MediaQuery.of(context).size.width, // add um mediaquery para o container oculpar toda a tela, "ficando" responsivokkk (i love you, tava sofrendo com isso)
+                    width: MediaQuery.of(context).size.width,
                     color: const Color.fromARGB(255, 11, 11, 11),
                     padding: const EdgeInsets.symmetric(vertical: 30.0),
                     child: const Column(
@@ -289,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'Transforme seu caminho com inovação e sustentabilidade!',
+                          'Transforme seu caminho com inovação e\nsustentabilidade!',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -305,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          'Avenida Giovanni Gronchi, 2967 - Morumbi, São Paulo - SP',
+                          'Avenida Giovanni Gronchi, 2967\nMorumbi, São Paulo - SP',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -342,38 +290,37 @@ class _HomePageState extends State<HomePage> {
 
 class Marcas extends StatelessWidget {
   final List<String> images = [
-    'assets/bmw.png', // estarei trocando em sala mo preguiça 
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP7yfHtJifPsdJtX3c-9LWyfcjt07JaTlmfg&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP7yfHtJifPsdJtX3c-9LWyfcjt07JaTlmfg&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP7yfHtJifPsdJtX3c-9LWyfcjt07JaTlmfg&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP7yfHtJifPsdJtX3c-9LWyfcjt07JaTlmfg&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP7yfHtJifPsdJtX3c-9LWyfcjt07JaTlmfg&s',
+    'assets/bmw.png',
+    'assets/mercedes.png',
+    'assets/nissan.png',
+    'assets/toyota.png',
+    'assets/audi.png',
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 140,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
         itemBuilder: (context, index) {
           return Container(
-            margin: const EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(10.0),
             width: 120,
             height: 120,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.white, // so charme it's not real
-                  blurRadius: 6.0,
-                  offset: Offset(0, 3),
+                  color: Colors.white,
+                  blurRadius: 4.0,
+                  offset: Offset(0, 1),
                 ),
               ],
             ),
             child: ClipOval(
-              child: Image.network(
+              child: Image.asset(
                 images[index],
                 fit: BoxFit.cover,
                 width: 120,
@@ -387,49 +334,105 @@ class Marcas extends StatelessWidget {
   }
 }
 
-// Modelos e lista de carros
 class Carros {
   final String nome;
+  final String modelo;
+  final String price;
+  final double rating;
   final String image;
+  final String descricao;
+  final List<Color> cores;
+  final List<String> itensAdicionais;
 
-  Carros({required this.nome, required this.image});
+  Carros({
+    required this.nome,
+    required this.modelo,
+    required this.price,
+    required this.rating,
+    required this.image,
+    required this.descricao,
+    required this.cores,
+    required this.itensAdicionais,
+  });
 }
 
 List<Carros> allCarros = [
   Carros(
-    nome: 'Billie red hair',
-    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0PBg0XUkyH4aLL69tuCXRQSK35Xif4MjdYlSNcGKlC2YP7fKUODDS1JZPjflb6EruwK0&usqp=CAU',
+    nome: 'Prius',
+    modelo: '2021',
+    price: 'R\$80.000,00',
+    rating: 4.5,
+    image: 'assets/prius.png',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and  typesetting industry. Lorem Ipsum has been the industrys standard dummy  text ever since the 1500s, when an unknown printer took a galley of type 15000s.',
+    cores: [Colors.blue, Colors.black, Colors.white],
+    itensAdicionais: [
+      'Detecção de ponto cego (BSD)',
+      'Sistema de freio motorizado inteligente',
+      'Monitoramento da fadiga do motorista (DFM)',
+      'Reconhecimento de sinais de trânsito (TSR)',
+      'Trava manual de segurança para crianças',
+    ],
   ),
   Carros(
-    nome: 'Billie green hair',
-    image: 'https://media.cnn.com/api/v1/images/stellar/prod/210317181128-billie-eilish-file-2020.jpg?q=w_2163,h_1380,x_0,y_0,c_fill',
+    nome: 'Civic Hybrid',
+    modelo: '2022',
+    price: 'R\$70.000,00',
+    rating: 4.3,
+    image: 'assets/CivicHybrid.png',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and  typesetting industry. Lorem Ipsum has been the industrys standard dummy  text ever since the 1500s, when an unknown printer took a galley of type 15000s.',
+    cores: [Colors.grey, Colors.black],
+    itensAdicionais: [
+      'Controle adaptativo de velocidade',
+      'Sistema de frenagem automática',
+      'Câmera traseira com guias dinâmicas',
+      'Assistência de permanência em faixa',
+    ],
   ),
   Carros(
-      nome: 'Billie blue hair',
-      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ9CZO_1RQQL9BPRFjJgLnlzKQVPf97HooGw&s'),
+    nome: 'Corolla Hybrid',
+    modelo: '2023',
+    price: 'R\$65.000,00',
+    rating: 4.6,
+    image: 'assets/Corolla.png',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and  typesetting industry. Lorem Ipsum has been the industrys standard dummy  text ever since the 1500s, when an unknown printer took a galley of type 15000s.',
+    cores: [Colors.black, Colors.white],
+    itensAdicionais: [
+      'Sistema de pré-colisão',
+      'Controle eletrônico de estabilidade',
+      'Monitoramento de pressão dos pneus',
+      'Faróis automáticos de LED',
+    ],
+  ),
   Carros(
-      nome: 'Billie gray hair',
-      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCLqSKDiOHJuYLKbwESbKJC26YFg_s3-eeGQ&s'),
-  Carros(
-      nome: 'Billie blonde hair',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXNc2DGfH8xjAFm9JCwJchlZvUQqzaajEqGj77FyNoq7Bs8KwnRSxp37bRPnnELfiZw2I&usqp=CAU'),
-  Carros(
-      nome: 'Jimin black hair',
-      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRggVwWMf6g6pPaltytcB4E3YnzzAQHBgxdVg&s'),
-  Carros(
-      nome: 'Billie black hair',
-      image:'https://images.hellomagazine.com/horizon/square/d73349b8f519-billie-eilish-tattoo-dragon.jpg'),
-  Carros(
-      nome: 'Billie black hair',
-      image:'https://media.zenfs.com/en/hypebae_340/3901c6c967afe79b1b769b36e7cc964a'),
-  Carros(
-      nome: 'Billie black hair',
-      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSB6L5vzDL4qjtoqgR2iKy1QKdWfnlcqkUJuy75MAjZaqMWd-4xyHwiGNQJvF6JkLRoFnc&usqp=CAU'),
-  Carros(
-      nome: 'Jimin pink hair',
-      image:'https://64.media.tumblr.com/db1f28f2e3afa1a7246b676da9cb2f85/1a23bf5bd75ae24a-50/s1280x1920/c0be6de565a6aa65ec23e15b77403eb00e0d74fe.jpg'),
-
-  // vou arrumar na sala tbm :) 
+    nome: 'Insight',
+    modelo: '2020',
+    price: 'R\$45.000,00',
+    rating: 4.2,
+    image: 'assets/Insight.png',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and  typesetting industry. Lorem Ipsum has been the industrys standard dummy  text ever since the 1500s, when an unknown printer took a galley of type 15000s.',
+    cores: [Colors.red, Colors.black, Colors.blue],
+    itensAdicionais: [
+      'Assistência de partida em subida',
+      'Controle de tração e estabilidade',
+      'Alerta de ponto cego',
+      'Faróis de neblina',
+    ],
+  ),
+    Carros(
+    nome: 'Auris Hybrid',
+    modelo: '2018',
+    price: 'R\$55.000,00',
+    rating: 4.9,
+    image: 'assets/Auris.png',
+    descricao: 'Lorem Ipsum is simply dummy text of the printing and  typesetting industry. Lorem Ipsum has been the industrys standard dummy  text ever since the 1500s, when an unknown printer took a galley of type 15000s.',
+    cores: [Colors.red, Colors.black, Colors.grey],
+    itensAdicionais: [
+      'Assistência de partida em subida',
+      'Controle de tração e estabilidade',
+      'Alerta de ponto cego',
+      'Faróis de neblina',
+    ],
+  ),
 ];
 
 class ProductCard extends StatelessWidget {
@@ -439,27 +442,25 @@ class ProductCard extends StatelessWidget {
   final double rating;
 
   const ProductCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.productName,
     required this.price,
     required this.rating,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: Column(
         children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.cover,
             ),
           ),
           Padding(
@@ -470,15 +471,22 @@ class ProductCard extends StatelessWidget {
                 Text(
                   productName,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                const SizedBox(height: 4),
                 Text(
                   price,
-                  style: const TextStyle(fontSize: 14, color: Color.fromARGB(255, 158, 158, 158)),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
                 ),
+                const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.star, color: Colors.yellow),
+                    const Icon(Icons.star, color: Colors.yellow, size: 16),
                     Text(rating.toString()),
                   ],
                 ),

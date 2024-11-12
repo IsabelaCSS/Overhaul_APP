@@ -32,83 +32,78 @@ class ItensAdicionais extends StatelessWidget {
       body: Column(
         children: [
           Image.asset(
-            'assets/renautkwid.png',
+            carro.image,
             width: 370,
             height: 280,
             fit: BoxFit.cover,
           ),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
               ),
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
+            ),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    '  ${carro.nome}', // Nome do carro
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                    ),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.star, color: Colors.yellow),
+                      const SizedBox(width: 5),
+                      Text('(${carro.rating})         '), // Avaliação do carro
+                    ],
+                  ),
+                ),
+               
+                
+                const SizedBox(height: 5),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          carro.nome,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const Icon(Icons.star, color: Colors.yellow),
-                        const SizedBox(width: 5),
-                        const Text(
-                          '4.5',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      '     • Detecção de ponto cego (BSD)\n'
-                      '     • Sistema de freio motorizado inteligente\n'
-                      '     • Monitoramento da fadiga do motorista (DFM)\n'
-                      '     • Reconhecimento de sinais de trânsito (TSR)\n'
-                      '     • Trava manual de segurança para crianças',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    const SizedBox(height: 44),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: _launchURL,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Text(
-                          'Marcar Test Drive',
-                          style: TextStyle(fontSize: 18, color: Colors.black),
-                        ),
+                  children: carro.itensAdicionais
+                      .map((item) => Text('     • $item', style: const TextStyle(fontSize: 14)))
+                      .toList(),
+                ),const SizedBox(height: 16),
+                  const Divider(color: Colors.grey, thickness: 1),
+                  const SizedBox(height: 16),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: _launchURL, // Chamando o método _launchURL ao clicar
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 30, 30, 30), // Cor de fundo ajustada
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    Center(
-                      child: Image.asset(
-                        'assets/logo.png',
-                        width: 100,
-                        height: 30,
-                        fit: BoxFit.cover,
-                      ),
+                    child: const Text(
+                      'Marcar Test Drive',
+                      style: TextStyle(fontSize: 18, color: Colors.white), // Ajuste de cor do texto
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 30),
+                Center(
+                  child: Image.asset(
+                    'assets/logo.png',
+                    width: 100,
+                    height: 30,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -116,12 +111,23 @@ class ItensAdicionais extends StatelessWidget {
     );
   }
 
-  void _launchURL() async {
-    const String url = 'https://drive.google.com/file/d/1D1njOUcKSaS-bV20uX8S2KV1t_FnsQMr/view?usp=drive_link';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+void _launchURL() async {
+  final Uri url = Uri.parse('https://www.youtube.com/watch?v=ak6rCkQs25M&list=PL21XB6MnrdgA6loXEywpXoW-_Dw_zUasu&index=6');
+
+  // Verifique se a URL pode ser lançada
+  if (await canLaunchUrl(url)) {
+    try {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication, // Abre o link no aplicativo externo
+      );
+    } catch (e) {
+      debugPrint('Erro ao tentar abrir a URL: $e');
     }
+  } else {
+    debugPrint('Não foi possível abrir a URL.');
   }
+}
+
+
 }

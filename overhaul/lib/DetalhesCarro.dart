@@ -9,7 +9,7 @@ class DetalhesCarro extends StatelessWidget {
   final Carros carro;
 
   const DetalhesCarro({super.key, required this.carro});
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class DetalhesCarro extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              'assets/renautkwid.png',
+              carro.image,  // Imagem do carro
               width: 370,
               height: 280,
               fit: BoxFit.cover,
@@ -51,11 +51,11 @@ class DetalhesCarro extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const ListTile(
+                  ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
-                      '  Renault Kwid',
-                      style: TextStyle(
+                      '  ${carro.nome}',  // Nome do carro
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
                       ),
@@ -63,44 +63,42 @@ class DetalhesCarro extends StatelessWidget {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 0),
+                        const SizedBox(height: 0),
                         Text(
-                          '     Modelo: 2019',
-                          style: TextStyle(fontSize: 17),
+                          '     Modelo: ${carro.modelo}',  // Modelo do carro
+                          style: const TextStyle(fontSize: 17),
                         ),
                         Text(
-                          '     Preço: \$45.000',
-                          style: TextStyle(fontSize: 17),
+                          '     Preço: ${carro.price}',  // Preço do carro
+                          style: const TextStyle(fontSize: 17),
                         ),
                       ],
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.star, color: Colors.yellow),
-                        SizedBox(width: 5),
-                        Text('(4.5)         '),
+                        const Icon(Icons.star, color: Colors.yellow),
+                        const SizedBox(width: 5),
+                        Text('(${carro.rating})         '),  // Avaliação do carro
                       ],
                     ),
                   ),
                   const SizedBox(height: 5),
-                  const Row(
+                  Row(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             'Cor:                               ',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Row(
-                            children: [
-                              ColorOption(Colors.brown),
-                              ColorOption(Colors.blue),
-                              ColorOption(Colors.white),
-                            ],
+                            children: carro.cores
+                                .map((color) => ColorOption(color))  // Cores do carro
+                                .toList(),
                           ),
                         ],
                       ),
@@ -119,18 +117,20 @@ class DetalhesCarro extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                    style: TextStyle(color: Color.fromARGB(255, 7, 7, 7)),
-                    textAlign: TextAlign.justify,
+                  Text(
+                    carro.descricao,  // Descrição do carro
+                    style: const TextStyle(color: Color.fromARGB(255, 7, 7, 7)),
+                        textAlign: TextAlign.justify,
                   ),
-                  const SizedBox(height: 20),
+const SizedBox(height: 16),
+                  const Divider(color: Colors.grey, thickness: 1),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            globals.currentCarro = carro; // va global
+                            globals.currentCarro = carro;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -159,7 +159,7 @@ class DetalhesCarro extends StatelessWidget {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          globals.currentCarro = carro; // va global
+                          globals.currentCarro = carro;
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -167,10 +167,10 @@ class DetalhesCarro extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'Itens Adicionais >',
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: Color.fromARGB(255, 0, 0, 0),
                             fontSize: 16,
                           ),
                         ),

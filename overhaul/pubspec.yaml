@@ -28,12 +28,8 @@ flutter:
 
   # Activos (imagenes, fuentes, etc.)
   assets:
-    - assets/logo.png
-    - assets/renautkwid.png
-    - assets/renautkwid2.png
-    - assets/nissan.png
-    - assets/mercedes.png
-    - assets/bmw.png
+    - assets/
+
 
     # Puedes añadir más activos aquí:
     # - assets/images/otra_imagen.png
