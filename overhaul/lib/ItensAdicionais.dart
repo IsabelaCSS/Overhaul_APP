@@ -9,42 +9,44 @@ class ItensAdicionais extends StatelessWidget {
 
   const ItensAdicionais({super.key, required this.carro});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
+ 
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
         backgroundColor: Colors.black,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Center(
-          child: Text(
-            'Itens Adicionais',
-            style: TextStyle(color: Colors.white),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-        ),
-      ),
-      body: Column(
-        children: [
-          Image.asset(
-            carro.image,
-            width: 370,
-            height: 280,
-            fit: BoxFit.cover,
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
+          title: const Center(
+            child: Text(
+              'Detalhes do Carro',
+              style: TextStyle(color: Colors.white),
             ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset(
+                carro.image, // Imagem do carro
+                width: 440,
+                height: 320,
+                fit: BoxFit.cover,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +65,7 @@ class ItensAdicionais extends StatelessWidget {
                     children: [
                       const Icon(Icons.star, color: Colors.yellow),
                       const SizedBox(width: 5),
-                      Text('(${carro.rating})         '), // Avaliação do carro
+                      Text('(${carro.avaliacao})         '), // Avaliação do carro
                     ],
                   ),
                 ),
@@ -94,25 +96,17 @@ class ItensAdicionais extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                Center(
-                  child: Image.asset(
-                    'assets/logo.png',
-                    width: 100,
-                    height: 30,
-                    fit: BoxFit.cover,
-                  ),
-                ),
               ],
             ),
           ),
         ],
       ),
-    );
+    ),
+      );
   }
 
 void _launchURL() async {
-  final Uri url = Uri.parse('https://www.youtube.com/watch?v=ak6rCkQs25M&list=PL21XB6MnrdgA6loXEywpXoW-_Dw_zUasu&index=6');
+  final Uri url = Uri.parse('https://lenamenezes.github.io/overhaul-site/test-drive.html#');
 
   // Verifique se a URL pode ser lançada
   if (await canLaunchUrl(url)) {

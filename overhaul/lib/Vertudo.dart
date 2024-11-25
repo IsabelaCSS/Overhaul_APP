@@ -100,7 +100,7 @@ class _CarListPageState extends State<CarListPage> {
                     ),
                     elevation: 8,
                     child: Container(
-                      padding: const EdgeInsets.only(top: 15, right: 5),
+                      padding: const EdgeInsets.only(top: 20, right: 5),
                       height: 265,
                       color: Colors.white,
                       child: Column(
@@ -109,19 +109,26 @@ class _CarListPageState extends State<CarListPage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                  carro.image,
-                                  width: 190,
-                                  height: 180,
-                                  fit: BoxFit.cover,
+                              // Espelhamento apenas na imagem
+                              Transform(
+                                transform: Matrix4.identity()..scale(-1.0, 1.0),
+                                alignment: Alignment.center,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    carro.image,
+                                    width: 200,
+                                    height: 180,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                              const SizedBox(width: 20),
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                   const SizedBox(height: 25),
                                     Text(
                                       carro.nome,
                                       style: const TextStyle(
@@ -130,14 +137,14 @@ class _CarListPageState extends State<CarListPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Modelo: ${carro.modelo}\nPreço: ${carro.price}',
+                                      'Modelo: ${carro.modelo}\nPreço: ${carro.preco}',
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     Row(
                                       children: [
                                         const Icon(Icons.star, color: Colors.yellow, size: 20),
                                         const SizedBox(width: 5),
-                                        Text('${carro.rating}', style: const TextStyle(fontSize: 16)),
+                                        Text('${carro.avaliacao}', style: const TextStyle(fontSize: 16)),
                                       ],
                                     ),
                                   ],
@@ -156,7 +163,7 @@ class _CarListPageState extends State<CarListPage> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 130),
+                                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 130),
                                 backgroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
