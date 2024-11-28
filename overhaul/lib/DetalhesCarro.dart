@@ -11,14 +11,6 @@
 
     const DetalhesCarro({super.key, required this.carro});
     
-     void _launchURL() async {
-  const url = 'https://catloperstcc.github.io/CatlopersWebsite/';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Não foi possível abrir o link: $url';
-  }
-}
 
     @override
     Widget build(BuildContext context) {
@@ -135,26 +127,35 @@
                     const SizedBox(height: 16),
                     const Divider(color: Colors.grey, thickness: 1),
                     const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: _launchURL, // Redireciona para o link
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              backgroundColor: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                     Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            globals.currentCarro = carro; // va global
+                            globals.currentCarro = carro;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ItensAdicionais(carro: carro),
                               ),
-                            ),
-                            child: const Text(
-                              'Comprar',
-                              style: TextStyle(color: Colors.white),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
+                          child: const Text(
+                            'Comprar',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
                     const SizedBox(height: 16),
                     Row(
                       children: [
