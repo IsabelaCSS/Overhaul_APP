@@ -1,8 +1,8 @@
 // ignore_for_file: file_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:overhaul/main.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'models/carro.dart'; // Atualize para este caminho
 
 class ItensAdicionais extends StatelessWidget {
   final Carros carro;

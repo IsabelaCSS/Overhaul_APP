@@ -1,7 +1,6 @@
 // globals.dart
 library my_prj.globals;
-
-import 'package:overhaul/main.dart';
+import 'models/carro.dart'; // Atualize para este caminho
 
 Carros? currentCarro;
 

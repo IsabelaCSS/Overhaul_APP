@@ -5,6 +5,7 @@
   import 'package:url_launcher/url_launcher.dart';
   import 'package:overhaul/ItensAdicionais.dart';
   import 'package:overhaul/globais.dart' as globals;
+import 'models/carro.dart'; // Atualize para este caminho
 
   class DetalhesCarro extends StatelessWidget {
     final Carros carro;
