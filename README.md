@@ -1,5 +1,12 @@
 # Overhaul
 
+O aplicativo Overhaul foi feito pela solicitação da empresa Overhaul e irá se tratar de um app que apresentará um catalogo com as principais informações dos carros hibridos e elétricos tendo, nome, contendo fotos, seus preço, descrições, avaliações e os itens adicionais que o carro tem, com o intuito de informar as pessoas/cientes que tem interesse em comprar algum carro, podendo assim ver qual deles lhe causa maior interesse, seja por conta de preço ou até mesmo pelos recursos oferecidos por cada. O app irá conter inicialmente quatro telas principais, sendo elas:
+
+- Main - Mostra a principais carros e contatos
+- Ver tudo - Mostra outros carros disponiveis 
+- Detalhes do Carro - Mostra a informações do carro
+- Itens Adicionais - Mostra os itens adicionais de cada carro
+
 Video do aplicativo: 
 > https://drive.google.com/file/d/1HwDMFPtcbjs8dXHSuWf4eJFUMQJrb_08/view?usp=sharing
 
