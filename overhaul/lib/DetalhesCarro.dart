@@ -133,7 +133,6 @@
                         child: ElevatedButton(
                           onPressed: () {
                             globals.currentCarro = carro; // va global
-                            globals.currentCarro = carro;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
