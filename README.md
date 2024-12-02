@@ -1,5 +1,15 @@
 # Overhaul
 
+## Integrantes
+- Carolina de Oliveira Alves
+- Giovana Vitória Borba dos Santos
+- Helena Jorgeane Menezes Macedo
+- Isabela de Oliveira Alves
+- Matheus Garcia Fernandes Victor
+- Rebeca Martins Silva
+
+***
+
 O aplicativo **Overhaul** foi desenvolvido sob solicitação da empresa **Overhaul** e tem como objetivo oferecer um catálogo completo com informações detalhadas sobre carros híbridos e elétricos. O app disponibilizará dados como o nome dos veículos, imagem, preços, descrições, avaliações e itens adicionais. Seu propósito é informar e auxiliar potenciais compradores interessados em adquirir um carro, permitindo que comparem modelos com base no preço ou nos recursos oferecidos.
 
 Inicialmente, o aplicativo contará com quatro telas principais, sendo elas:  
